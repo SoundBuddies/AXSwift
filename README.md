@@ -1,5 +1,15 @@
 # AXSwift
 
+Forked from tmandry and added some convenience functions and computed properties. 
+
+Use the following link for Swift Package Manager
+```
+https://github.com/SoundBuddies/AXSwift/
+```
+
+
+# AXSwift
+
 [![Version](https://cocoapod-badges.herokuapp.com/v/AXSwift/badge.svg)](https://cocoapods.org/pods/AXSwift)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
