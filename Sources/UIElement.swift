@@ -593,9 +593,6 @@ open class UIElement {
         return UIElement(result!)
     }
 
-    // TODO: convenience functions for attributes
-    // TODO: get any attribute as a UIElement or [UIElement] (or a subclass)
-    // TODO: promoters
 }
 
 // MARK: - CustomStringConvertible
@@ -640,6 +637,7 @@ extension UIElement: CustomStringConvertible {
         }
         return "\(attributes)"
     }
+    
 }
 
 // MARK: - Equatable
@@ -675,4 +673,189 @@ extension UIElement {
             return nil
         }
     }
+}
+
+
+// MARK: - Convenience functions and computed properties to bypass do/try/catch and returning the correct type
+
+extension UIElement {
+    
+    
+    public var axRole: String? {
+        return try! self.attribute(.role)
+    }
+    //(NSString *) - type, non-localized (e.g. radioButton)
+    
+    public var axRoleDescription: String? {
+        return try! attribute(.roleDescription)
+    }
+    //(NSString *) - user readable role (e.g. "radio button")
+    
+    public var axSubrole: String? {
+        return try! self.attribute(.subrole)
+    }
+    //(NSString *) - type, non-localized (e.g. closeButton)
+    
+    public var axHelp: String? {
+        return try! self.attribute(.help)
+    }
+    //(NSString *) - instance description (e.g. a tool tip)
+    
+    public var axValue: Int? {
+        return try! self.attribute(.value)
+    }
+    //(id)         - element's value
+    
+    public var axMinValue: Int? {
+        return try! self.attribute(.minValue)
+    }
+    //(id)         - element's min value
+    
+    public var axMaxValue: Int? {
+        return try! self.attribute(.maxValue)
+    }
+    //(id)         - element's max value
+    
+    public var axEnabled: Bool? {
+        return try! self.attribute(.enabled)
+    }
+    //(NSNumber *) - (boolValue) responds to user?
+    
+    public var axFocused: Bool? {
+        return try! self.attribute(.focused)
+    }
+    //(NSNumber *) - (boolValue) has keyboard focus?
+    
+    public var axParent: UIElement? {
+        return try! self.attribute(.parent)
+    }
+    //(id)         - element containing you
+    
+    public var axChildren: [UIElement]? {
+        
+        var arr: [UIElement] = []
+        guard let children: NSArray = try! self.attribute(.children) else { return arr }
+        
+        for child in children {
+            
+            let uie = UIElement(child as! AXUIElement)
+            arr.append(uie)
+            
+        }
+        return arr
+    }
+    //(NSArray *)  - elements you contain
+    
+    public var axWindow: Int? {
+        return try! self.attribute(.window)
+    }
+    //(id)         - UIElement for the containing window
+    
+    public var axTopLevelUIElement: UIElement? {
+        return try! self.attribute(.topLevelUIElement)
+    }
+    //(id)         - UIElement for the containing top level element
+    
+    public var axSelectedChildren: [UIElement]? {
+        
+        var arr: [UIElement] = []
+        guard let children: NSArray = try! self.attribute(.selectedChildren) else { return arr }
+        
+        for child in children {
+            
+            let uie = UIElement(child as! AXUIElement)
+            arr.append(uie)
+            
+        }
+        return arr
+    }
+    //(NSArray *)  - child elements which are selected
+    
+    public var axVisibleChildren: [UIElement]? {
+        
+        var arr: [UIElement] = []
+        guard let children: NSArray = try! self.attribute(.visibleChildren) else { return arr }
+        
+        for child in children {
+            
+            let uie = UIElement(child as! AXUIElement)
+            arr.append(uie)
+            
+        }
+        return arr
+    }
+    //(NSArray *)  - child elements which are visible
+    
+    public var axPosition: NSValue? {
+        return try! self.attribute(.position)
+    }
+    //(NSValue *)  - (pointValue) position in screen coords
+    
+    public var axSize: NSSize? {
+        return try! self.attribute(.size)
+    }
+    //(NSValue *)  - (sizeValue) size
+    
+    public var axFrame: NSRect? {
+        return try! self.attribute(.frame)
+    }
+    //(NSValue *)  - (rectValue) frame
+    
+    public var axContents: [UIElement]? {
+        
+        var arr: [UIElement] = []
+        guard let children: NSArray = try! self.attribute(.contents) else { return arr }
+        
+        for child in children {
+            
+            let uie = UIElement(child as! AXUIElement)
+            arr.append(uie)
+            
+        }
+        return arr
+    }
+    //(NSArray *)  - main elements
+    
+    public var axTitle: String? {
+        return try! self.attribute(.title)
+    }
+    //(NSString *) - visible text (e.g. of a push button)
+    
+    public var axDescription: String? {
+        return try! self.attribute(.description)
+    }
+    //(NSString *) - instance description
+    
+    public var axShownMenu: Int? {
+        return try! self.attribute(.shownMenu)
+    }
+    //(id)         - menu being displayed
+    
+    public var axValueDescription: String? {
+        return try! self.attribute(.valueDescription)
+    }
+    //(NSString *)  - text description of value
+    
+    
+    
+    /// Returrns the first UIElement which met the condition below or nil
+    /// - Parameters:
+    ///   - attr: <#attr description#>
+    ///   - value: <#value description#>
+    /// - Returns: <#description#>
+    public func getChild(withAttribute attr: Attribute, containing value: String) -> UIElement? {
+        
+        
+        guard let children = self.axChildren else { return nil }
+        
+        for child in children {
+            guard let str: String = try! child.attribute(attr) else { continue }
+            if str.contains(value) {
+                return child
+            }
+        }
+        return nil
+    }
+    
+    
 }
