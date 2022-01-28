@@ -682,59 +682,59 @@ extension UIElement {
     
     
     public var axRole: String? {
-        return try? self.attribute(.role)
+        return (try? self.attribute(.role)) ?? nil
     }
     //(NSString *) - type, non-localized (e.g. radioButton)
     
     public var axRoleDescription: String? {
-        return try? attribute(.roleDescription)
+        return (try? self.attribute(.roleDescription)) ?? nil
     }
-    //(NSString *) - user readable role (e.g. "radio button")
+    //(NSString ) ?? nil*) - user readable role (e.g. "radio button")
     
     public var axSubrole: String? {
-        return try? self.attribute(.subrole)
+        return (try? self.attribute(.subrole)) ?? nil
     }
     //(NSString *) - type, non-localized (e.g. closeButton)
     
     public var axHelp: String? {
-        return try? self.attribute(.help)
+        return (try? self.attribute(.help)) ?? nil
     }
     //(NSString *) - instance description (e.g. a tool tip)
     
     public var axValue: Any? {
-        return try? self.attribute(.value)
+        return (try? self.attribute(.value)) ?? nil
     }
     //(id)         - element's value
     
     public var axMinValue: Any? {
-        return try? self.attribute(.minValue)
+        return (try? self.attribute(.minValue)) ?? nil
     }
     //(id)         - element's min value
     
     public var axMaxValue: Any? {
-        return try? self.attribute(.maxValue)
+        return (try? self.attribute(.maxValue)) ?? nil
     }
     //(id)         - element's max value
     
     public var axEnabled: Bool? {
-        return try? self.attribute(.enabled)
+        return (try? self.attribute(.enabled)) ?? nil
     }
     //(NSNumber *) - (boolValue) responds to user?
     
     public var axFocused: Bool? {
-        return try? self.attribute(.focused)
+        return (try? self.attribute(.focused)) ?? nil
     }
     //(NSNumber *) - (boolValue) has keyboard focus?
     
     public var axParent: UIElement? {
-        return try? self.attribute(.parent)
+        return (try? self.attribute(.parent)) ?? nil
     }
     //(id)         - element containing you
     
     public var axChildren: [UIElement]? {
         
         var arr: [UIElement] = []
-        guard let children: NSArray = try? self.attribute(.children) else { return arr }
+        guard let children: NSArray = (try? self.attribute(.children)) ?? nil else { return arr }
         
         for child in children {
             
@@ -747,19 +747,19 @@ extension UIElement {
     //(NSArray *)  - elements you contain
     
     public var axWindow: Any? {
-        return try? self.attribute(.window)
+        return (try? self.attribute(.window)) ?? nil
     }
     //(id)         - UIElement for the containing window
     
     public var axTopLevelUIElement: UIElement? {
-        return try? self.attribute(.topLevelUIElement)
+        return (try? self.attribute(.topLevelUIElement)) ?? nil
     }
     //(id)         - UIElement for the containing top level element
     
     public var axSelectedChildren: [UIElement]? {
         
         var arr: [UIElement] = []
-        guard let children: NSArray = try? self.attribute(.selectedChildren) else { return arr }
+        guard let children: NSArray = (try? self.attribute(.selectedChildren)) ?? nil else { return arr }
         
         for child in children {
             
@@ -774,7 +774,7 @@ extension UIElement {
     public var axVisibleChildren: [UIElement]? {
         
         var arr: [UIElement] = []
-        guard let children: NSArray = try? self.attribute(.visibleChildren) else { return arr }
+        guard let children: NSArray = (try? self.attribute(.visibleChildren)) ?? nil else { return arr }
         
         for child in children {
             
@@ -787,24 +787,24 @@ extension UIElement {
     //(NSArray *)  - child elements which are visible
     
     public var axPosition: NSValue? {
-        return try? self.attribute(.position)
+        return (try? self.attribute(.position)) ?? nil
     }
     //(NSValue *)  - (pointValue) position in screen coords
     
     public var axSize: NSSize? {
-        return try? self.attribute(.size)
+        return (try? self.attribute(.size)) ?? nil
     }
     //(NSValue *)  - (sizeValue) size
     
     public var axFrame: NSRect? {
-        return try? self.attribute(.frame)
+        return (try? self.attribute(.frame)) ?? nil
     }
     //(NSValue *)  - (rectValue) frame
     
     public var axContents: [UIElement]? {
         
         var arr: [UIElement] = []
-        guard let children: NSArray = try? self.attribute(.contents) else { return arr }
+        guard let children: NSArray = (try? self.attribute(.contents)) ?? nil else { return arr }
         
         for child in children {
             
@@ -817,22 +817,22 @@ extension UIElement {
     //(NSArray *)  - main elements
     
     public var axTitle: String? {
-        return try? self.attribute(.title)
+        return (try? self.attribute(.title)) ?? nil
     }
     //(NSString *) - visible text (e.g. of a push button)
     
     public var axDescription: String? {
-        return try? self.attribute(.description)
+        return (try? self.attribute(.description)) ?? nil
     }
     //(NSString *) - instance description
     
     public var axShownMenu: Any? {
-        return try? self.attribute(.shownMenu)
+        return (try? self.attribute(.shownMenu)) ?? nil
     }
     //(id)         - menu being displayed
     
     public var axValueDescription: String? {
-        return try? self.attribute(.valueDescription)
+        return (try? self.attribute(.valueDescription)) ?? nil
     }
     //(NSString *)  - text description of value
     
@@ -849,7 +849,7 @@ extension UIElement {
         guard let children = self.axChildren else { return nil }
         
         for child in children {
-            guard let str: String = try? child.attribute(attr) else { continue }
+            guard let str: String = (try? child.attribute(attr)) ?? nil else { continue }
             if str.contains(value) {
                 return child
             }
