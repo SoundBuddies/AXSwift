@@ -4,14 +4,12 @@ Forked from tmandry and added some convenience functions and computed properties
 
 Use the following link for Swift Package Manager
 ```
-https://github.com/SoundBuddies/AXSwift/
+.package(url: "https://github.com/SoundBuddies/AXSwift", from: 0.3.0"),"
 ```
 
 
 # AXSwift
 
-[![Version](https://cocoapod-badges.herokuapp.com/v/AXSwift/badge.svg)](https://cocoapods.org/pods/AXSwift)
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 AXSwift is a Swift wrapper for macOS's C-based accessibility client APIs. Working with these APIs is
 error-prone and a huge pain, so AXSwift makes everything easier:
@@ -32,23 +30,4 @@ In your Package.swift:
 .package(url: "https://github.com/tmandry/AXSwift", from: "0.3.0"),
 ```
 
-### Carthage
-In your Cartfile:
-```
-github "tmandry/AXSwift" ~> 0.3
-```
 
-### CocoaPods
-In your Podfile:
-```
-pod 'AXSwift', '~> 0.3'
-```
-
-See the source of [AXSwiftExample](https://github.com/tmandry/AXSwift/blob/master/AXSwiftExample/AppDelegate.swift)
-and [AXSwiftObserverExample](https://github.com/tmandry/AXSwift/blob/master/AXSwiftObserverExample/AppDelegate.swift)
-for an example of the API.
-
-## Related Projects
-
-[Swindler](https://github.com/tmandry/Swindler), a framework for building macOS window managers in Swift,
-is built on top of AXSwift.
