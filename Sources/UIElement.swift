@@ -676,13 +676,17 @@ extension UIElement {
 }
 
 
-// MARK: - Convenience functions and computed properties to bypass do/try/catch and returning the correct type
+// MARK: - Convenience methods and computed properties, neglecting do/try/catch and returning the correct type
 
 extension UIElement {
     
     
-    public var axRole: String? {
-        return (try? self.attribute(.role)) ?? nil
+    public var axRole: Role? {
+        if let str: String = (try? self.attribute(.role)) ?? nil {
+            return Role(rawValue: str)
+        } else {
+            return nil
+        }
     }
     //(NSString *) - type, non-localized (e.g. radioButton)
     
@@ -691,8 +695,12 @@ extension UIElement {
     }
     //(NSString ) ?? nil*) - user readable role (e.g. "radio button")
     
-    public var axSubrole: String? {
-        return (try? self.attribute(.subrole)) ?? nil
+    public var axSubrole: Subrole? {
+        if let str: String = (try? self.attribute(.subrole)) ?? nil {
+            return Subrole(rawValue: str)
+        } else {
+            return nil
+        }
     }
     //(NSString *) - type, non-localized (e.g. closeButton)
     
@@ -746,7 +754,7 @@ extension UIElement {
     }
     //(NSArray *)  - elements you contain
     
-    public var axWindow: Any? {
+    public var axWindow: UIElement? {
         return (try? self.attribute(.window)) ?? nil
     }
     //(id)         - UIElement for the containing window
@@ -786,7 +794,7 @@ extension UIElement {
     }
     //(NSArray *)  - child elements which are visible
     
-    public var axPosition: NSValue? {
+    public var axPosition: NSPoint? {
         return (try? self.attribute(.position)) ?? nil
     }
     //(NSValue *)  - (pointValue) position in screen coords
@@ -838,19 +846,18 @@ extension UIElement {
     
     
     
-    /// Returrns the first UIElement which met the condition below or nil
+    /// Returns the first UIElement of an array of UIElement children which met the condition below or nil. The UIElement attribute must return a String
     /// - Parameters:
-    ///   - attr: <#attr description#>
-    ///   - value: <#value description#>
-    /// - Returns: <#description#>
-    public func getChild(withAttribute attr: Attribute, containing value: String) -> UIElement? {
-        
+    ///   - attr: see  Attribute enum for available choice
+    ///   - string: a string to look for in the returned attribute
+    /// - Returns: the first UIElement found in the array or nil
+    public func getChild(withAttribute attr: Attribute, containing string: String) -> UIElement? {
         
         guard let children = self.axChildren else { return nil }
         
         for child in children {
             guard let str: String = (try? child.attribute(attr)) ?? nil else { continue }
-            if str.contains(value) {
+            if str.contains(string) {
                 return child
             }
         }
