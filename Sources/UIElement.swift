@@ -844,7 +844,13 @@ extension UIElement {
     }
     //(NSString *)  - text description of value
     
+    public var isMainWindow: Bool? {
+        return (try? self.attribute(.main)) ?? nil
+    }
     
+    public var isFrontmost: Bool? {
+        return (try? self.attribute(.frontmost)) ?? nil
+    }
     
     /// Returns the first UIElement of an array of UIElement children which met the condition below or nil. The UIElement attribute must return a String
     /// - Parameters:
